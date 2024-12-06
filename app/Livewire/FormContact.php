@@ -66,7 +66,7 @@ class FormContact extends Component
             $this->dispatch(
                 'notification',
                 type: 'error',
-                title: 'Contact created successfully',
+                title: 'The contact already exists',
                 position: 'center'
             );
         }

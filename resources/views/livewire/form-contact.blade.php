@@ -1,4 +1,8 @@
 <div class="card p-5">
+
+    <h3>NEW CONTACT</h3>
+    <hr>
+
     <form wire:submit="newContact" novalidate>
 
         <div class="mb-3">
@@ -32,6 +36,7 @@
         <div class="text-end">
             <button class="btn btn-secondary px-5">Save</button>
         </div>
+
 
         @if ($error)
             <div class="alert alert-danger text-center mt-3" x-data="{ show: true }" x-show="show"

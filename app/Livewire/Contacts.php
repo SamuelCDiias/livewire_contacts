@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Contact;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use PhpParser\Node\Expr\FuncCall;
 
 class Contacts extends Component
 {
@@ -12,14 +13,19 @@ class Contacts extends Component
 
     public function mount()
     {
-        $this->contacts = Contact::all();
+        $this->updateContacts();
     }
 
     #[On('contactAdded')]
     public function updateContactList()
     {
-        $this->contacts = Contact::all();
+        $this->updateContacts();
 
+    }
+
+    private function updateContacts()
+    {
+        $this->contacts = Contact::all();
     }
 
     public function render()

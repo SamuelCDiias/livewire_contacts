@@ -18,6 +18,12 @@ class FormContact extends Component
     #[Validate('required | min:5 | max:20')]
     public $phone;
 
+    // error and success messages
+
+    public $error = '';
+    public $success = '';
+
+
     public function newContact()
     {
         // validation
@@ -27,7 +33,7 @@ class FormContact extends Component
         Log::info('Novo Contato: ' . $this->name . ' - ' . $this->email . ' - ' . $this->phone);
 
         // store contact in database
-        Contact::firstOrCreate(
+        $result = Contact::firstOrCreate(
             [
                 'name' => $this->name,
                 'email' => $this->email,
@@ -37,10 +43,14 @@ class FormContact extends Component
             ]
         );
 
-
-
-        // clear for
-        $this->reset();
+        // check for success or error
+        if ($result->wasRecentlyCreated) {
+            // clear all public properties
+            $this->reset();
+            $this->success = 'Contact created successfully';
+        } else {
+            $this->error = 'The contact already exists';
+        }
     }
 
     public function render()

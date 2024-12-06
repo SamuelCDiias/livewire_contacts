@@ -1,5 +1,5 @@
 <div class="card p-5">
-    <form wire:submit="newContact">
+    <form wire:submit="newContact" novalidate>
 
         <div class="mb-3">
             <label for="name">Name</label>

@@ -6,18 +6,33 @@ use App\Models\Contact;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
-use PhpParser\Node\Expr\FuncCall;
 
 class Contacts extends Component
 {
 
+    public string $search = '';
+    private int $contactsPerPage = 3;
+
+
     use WithPagination;
 
     #[On('contactAdded')]
-    public function updateContactList(){}
+    public function updateContactList() {}
 
     public function render()
     {
-        return view('livewire.contacts')->with('contacts', Contact::paginate(3));
+
+        $contacts = null;
+
+        if ($this->search) {
+            $contacts = Contact::where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('email', 'like', '%' . $this->search . '%')
+                ->orWhere('phone', 'like', '%' . $this->search . '%')
+                ->paginate($this->contactsPerPage);
+        } else {
+            $contacts = Contact::paginate($this->contactsPerPage);
+        }
+
+        return view('livewire.contacts')->with('contacts', $contacts);
     }
 }
